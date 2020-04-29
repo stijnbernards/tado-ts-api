@@ -3,6 +3,9 @@ import { TadoOAuth } from '~/tadoOAuth'
 import fetch from 'node-fetch'
 import { createHash } from 'crypto'
 
+export class IntegrityError extends Error {}
+export class EnvFileError extends Error {}
+
 export interface TadoEnvironment {
   version: string
   environment: 'production' | 'development'
@@ -50,13 +53,13 @@ async function fetchTadoEnv() {
           .update(envData, 'utf8')
           .digest('base64')
 
-        console.log(`Tado Env integrity hash: ${integrity}`)
+        console.log(`🌡️ Tado Env integrity hash: ${integrity}`)
 
         if (
           integrity !== process.env.TADO_ENV_INTEGRITY &&
           process.env.TADO_ENV_INTEGRITY_CHECK
         ) {
-          throw new Error(
+          throw new IntegrityError(
             `💥 Integrity check failed! Did the Tado ENV update? Recieved following sha256 integrity: ${integrity}`,
           )
         }
@@ -66,7 +69,7 @@ async function fetchTadoEnv() {
         eval(envData)
 
         if (TD === undefined) {
-          throw new Error(
+          throw new EnvFileError(
             `💥 Something went wrong during Tado env file loading is your internet connection working?`,
           )
         }

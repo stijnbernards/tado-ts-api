@@ -2,27 +2,32 @@ import fetch, { RequestInit } from 'node-fetch'
 import { generateToken, refreshToken } from '~/tadoOAuth'
 import fetchTadoEnv from '~/fetchTadoEnv'
 
-export default async function tadoRequest(uri: string, options: RequestInit) {
+export default async function tadoRequest<T = any>(uri: string, options: RequestInit = {}, attempts: number = 0) {
+    if (attempts > 2) {
+        throw Error('💥 Could not acquire access token!')
+    }
+
   const tadoEnvironment = await fetchTadoEnv()
   const tokenData = await generateToken()
 
-  return new Promise((resolve) => {
+  return new Promise<T>((resolve) => {
     fetch(`${tadoEnvironment.baseUrl}${uri}`, {
       ...options,
       headers: {
         Authorization: `Bearer ${tokenData.access_token}`,
-        ...options.headers,
       },
     }).then((response) => {
       if (response.status === 401) {
         refreshToken().then(() => {
-          resolve(tadoRequest(uri, options))
+          resolve(tadoRequest(uri, options, attempts += 1))
         })
 
         return
       }
 
-      resolve(response)
+        response.json().then((result => {
+            resolve(result)
+        }))
     })
   })
 }

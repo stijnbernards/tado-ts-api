@@ -17,7 +17,8 @@
     "lint:fix": "yarn --silent lint:code --fix && prettier --write '**/*.{json,md,yml}'"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "@types/node": "^13.13.4",
