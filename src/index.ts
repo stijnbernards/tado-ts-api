@@ -1,9 +1,3 @@
-interface Tado {
-    test: string
-}
-
-function f(): Tado {
-    return {
-        test: "test"
-    }
-}
+export * from '~/fetchTadoEnv'
+export * from '~/setupTadoConnection'
+export * from '~/tadoOAuth'

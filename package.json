@@ -16,7 +16,12 @@
     "lint:rest:specific": "prettier --check",
     "lint:fix": "yarn --silent lint:code --fix && prettier --write '**/*.{json,md,yml}'"
   },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
   "devDependencies": {
+    "@types/node": "^13.13.4",
+    "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
@@ -29,6 +34,10 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x",
-    "eslint-plugin-you-dont-need-lodash-underscore": "^6.8.0"
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.8.0",
+    "prettier": "^2.0.5"
+  },
+  "eslintConfig": {
+    "extends": "./eslint-config/index.js"
   }
 }

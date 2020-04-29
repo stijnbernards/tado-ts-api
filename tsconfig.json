@@ -2,7 +2,7 @@
   "include": ["src", "../types", "types"],
   "exclude": ["**/*.test.ts"],
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["esnext"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
