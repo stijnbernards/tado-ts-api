@@ -1,4 +1,5 @@
 import tadoRequest from "~/tadoRequest";
+import makeUrl from "~/makeUrl";
 
 export const API_URL = '/api/v2/homes/:homeId/zones'
 
@@ -49,5 +50,7 @@ export interface OpenWindowDetection {
 }
 
 export default function getZones(homeId: string) {
-    return tadoRequest<Zone[]>(API_URL.replace(':homeId', homeId))
+    return tadoRequest<Zone[]>(
+        makeUrl(API_URL, {':homeId': homeId})
+    )
 }
