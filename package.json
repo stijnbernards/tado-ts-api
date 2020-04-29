@@ -4,7 +4,10 @@
   "description": "TypeScript NodeJS Tado API",
   "author": "Stijn Bernards",
   "license": "MIT",
-  "script": {
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
     "typecheck": "tsc",
     "lint": "yarn --silent lint:code && yarn --silent lint:rest",
     "lint:code": "yarn --silent lint:code:specific .",
