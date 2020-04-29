@@ -1,6 +1,6 @@
 {
   "name": "tado-ts-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript NodeJS Tado API",
   "author": "Stijn Bernards",
   "license": "MIT",
