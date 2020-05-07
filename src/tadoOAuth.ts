@@ -1,5 +1,6 @@
-import fetchTadoEnv from '~/fetchTadoEnv'
+import fetchTadoEnv from './fetchTadoEnv'
 import fetch from 'node-fetch'
+import {URLSearchParams} from "url";
 
 export interface TadoOAuth {
   clientApiEndpoint: string
@@ -42,17 +43,25 @@ async function generateToken() {
         client_id: tadoEnvironment.oauth.clientId,
         client_secret: tadoEnvironment.oauth.clientSecret,
         grant_type: 'password',
+        password: process.env.TADO_PASSWORD,
         scope: 'home.user',
         username: process.env.TADO_USERNAME,
-        password: process.env.TADO_PASSWORD,
       }
       /* eslint-enable @typescript-eslint/camelcase */
 
-      fetch(tadoEnvironment.oauth.apiEndpoint, {
+      fetch(`${tadoEnvironment.oauth.apiEndpoint}/token`, {
         method: 'POST',
-        body: JSON.stringify(oauthBody),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(oauthBody).toString(),
       }).then((authResponse) => {
-        resolve(authResponse.json())
+        if (authResponse.ok) {
+          resolve(authResponse.json())
+          return
+        }
+
+        authResponse.text().then((result) => {throw Error(result)})
       })
     })
   })
@@ -82,11 +91,16 @@ async function refreshToken() {
       }
       /* eslint-enable @typescript-eslint/camelcase */
 
-      fetch(tadoEnvironment.oauth.apiEndpoint, {
+      fetch(`${tadoEnvironment.oauth.apiEndpoint}/token`, {
         method: 'POST',
-        body: JSON.stringify(oauthBody),
-      }).then(() => {
-        resolve(accessToken)
+        body: new URLSearchParams(oauthBody),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      }).then((response) => {
+       response.json().then((newToken) => {
+         resolve(newToken)
+        })
       })
     })
   })

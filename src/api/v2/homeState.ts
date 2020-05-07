@@ -1,5 +1,5 @@
-import tadoRequest from "~/tadoRequest";
-import makeUrl from "~/makeUrl";
+import tadoRequest from "../../tadoRequest";
+import makeUrl from "../../makeUrl";
 
 export const API_URL = '/api/v2/homes/:homeId/state'
 

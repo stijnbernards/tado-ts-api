@@ -1,6 +1,6 @@
-import tadoRequest from "~/tadoRequest";
+import tadoRequest from "../../tadoRequest";
 
-export const API_URL = '/api/v1/me'
+export const API_URL = '/api/v2/me'
 
 export interface User {
     name: string
@@ -8,9 +8,14 @@ export interface User {
     username: string
     enabled: boolean
     id: string
-    homeId: number
+    homes: UserHome[]
     locale: string
     type: string
+}
+
+export interface UserHome {
+    name: string
+    id: number
 }
 
 export default function me() {

@@ -1,4 +1,5 @@
-import { TadoOAuth } from '~/tadoOAuth'
+import { TadoOAuth } from './tadoOAuth'
+import nodeEval from 'node-eval'
 
 import fetch from 'node-fetch'
 import { createHash } from 'crypto'
@@ -28,7 +29,6 @@ export interface TadoEnvironment {
 }
 
 declare global {
-  let TD: { config: TadoEnvironment } | undefined
   let TadoEnvironment: TadoEnvironment
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
@@ -53,24 +53,23 @@ async function fetchTadoEnv() {
           .update(envData, 'utf8')
           .digest('base64')
 
-        console.log(`🌡️ Tado Env integrity hash: ${integrity}`)
-
         if (
           integrity !== process.env.TADO_ENV_INTEGRITY &&
           process.env.TADO_ENV_INTEGRITY_CHECK
         ) {
           throw new IntegrityError(
-            `💥 Integrity check failed! Did the Tado ENV update? Recieved following sha256 integrity: ${integrity}`,
+            `💥 Integrity check failed! Did the Tado ENV update? Received following sha256 integrity: ${integrity}`,
           )
         }
 
+          console.log(`🌡️  Tado Env integrity hash: ${integrity}`)
+
         // The environment file is a JS file so we execute it to get the data
-        /* eslint-disable-next-line no-eval */
-        eval(envData)
+        const TD = nodeEval(envData + ';module.exports = TD')
 
         if (TD === undefined) {
           throw new EnvFileError(
-            `💥 Something went wrong during Tado env file loading is your internet connection working?`,
+            `💥 Something went wrong during Tado env file loading.`,
           )
         }
 

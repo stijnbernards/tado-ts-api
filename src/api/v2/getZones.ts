@@ -1,12 +1,12 @@
-import tadoRequest from "~/tadoRequest";
-import makeUrl from "~/makeUrl";
+import tadoRequest from "../../tadoRequest";
+import makeUrl from "../../makeUrl";
 
 export const API_URL = '/api/v2/homes/:homeId/zones'
 
 export interface Zone {
     id: number,
     name: string,
-    type: string,
+    type: 'HEATING' | 'HOT_WATER' | string
     dateCreated: string,
     deviceTypes: string[],
     devices: Device[],

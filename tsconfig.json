@@ -1,5 +1,5 @@
 {
-  "include": ["src", "../types", "types"],
+  "include": ["src", "types"],
   "exclude": ["**/*.test.ts"],
   "compilerOptions": {
     "lib": ["esnext"],

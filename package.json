@@ -1,6 +1,6 @@
 {
   "name": "tado-ts-api",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "description": "TypeScript NodeJS Tado API",
   "author": "Stijn Bernards",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "lint:fix": "yarn --silent lint:code --fix && prettier --write '**/*.{json,md,yml}'"
   },
   "dependencies": {
+    "node-eval": "^2.0.0",
     "node-fetch": "^2.6.0",
     "typescript": "^3.8.3"
   },

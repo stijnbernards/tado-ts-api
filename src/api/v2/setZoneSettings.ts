@@ -1,6 +1,5 @@
-import {Setting} from "~/api/v2/getZoneState";
-import tadoRequest from "~/tadoRequest";
-import makeUrl from "~/makeUrl";
+import tadoRequest from "../../tadoRequest";
+import makeUrl from "../../makeUrl";
 
 export interface SetSettings {
     setting: Setting,
@@ -8,7 +7,7 @@ export interface SetSettings {
 }
 
 export interface Termination {
-    type: 'MANUAL' | string
+    typeSkillBasedApp: 'MANUAL' | string
 }
 
 export interface OverlayResponse {
@@ -18,6 +17,17 @@ export interface OverlayResponse {
         type: 'MANUAL' | string
         projectedExpiry?: string
     }
+}
+
+export interface Setting {
+    type: 'HEATING' | 'HOT_WATER' | string,
+    power: 'ON' | string,
+    temperature: Temperature
+}
+
+export interface Temperature {
+    celsius?: number
+    fahrenheit?: number
 }
 
 const API_URL = '/api/v2/homes/:homeId/zones/:zoneId/overlay'

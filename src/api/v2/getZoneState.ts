@@ -1,5 +1,5 @@
-import tadoRequest from "~/tadoRequest";
-import makeUrl from "~/makeUrl";
+import tadoRequest from "../../tadoRequest";
+import makeUrl from "../../makeUrl";
 
 const API_URL = '/api/v2/homes/:homeId/zones/:zoneId/state'
 
@@ -15,12 +15,30 @@ export interface ZoneState {
     nextScheduleChange?: NextScheduleChange,
     link: Link,
     activityDataPoints?: {},
-    sensorDataPoints?: {}
+    sensorDataPoints: SensorDataPoints
+}
+
+export interface InsideTemperature {
+    celsius: string
+    fahrenheit: string
+    type: 'TEMPERATURE' | string
+    timestamp: string
+}
+
+export interface SensorDataPoints {
+    insideTemperature?: InsideTemperature
+    humidity?: Humidity
+}
+
+export interface Humidity {
+    type: 'PERCENTAGE' | string
+    percentage: string
+    timestamp: string
 }
 
 export interface Setting {
     type: 'HEATING' | 'HOT_WATER' | string,
-    power: string,
+    power: 'ON' | string,
     temperature?: Temperature
 }
 

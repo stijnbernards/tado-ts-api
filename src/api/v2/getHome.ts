@@ -1,23 +1,23 @@
-import tadoRequest from "~/tadoRequest";
+import tadoRequest from "../../tadoRequest";
 
 export const API_URL = '/api/v2/homes/'
 
 export interface Home {
-    id: number,
-    name: string,
-    dateTimeZone: string,
-    dateCreated: string,
-    temperatureUnit: string,
-    installationCompleted: boolean,
-    partner: string,
-    simpleSmartScheduleEnabled: boolean,
-    awayRadiusInMeters: number,
-    usePreSkillsApps: boolean,
-    skills: string[],
-    christmasModeEnabled: boolean,
-    contactDetails: ContactDetails,
-    address: Address,
-    geolocation: GeoLocation,
+    id: number
+    name: string
+    dateTimeZone: string
+    dateCreated: string
+    temperatureUnit: string
+    installationCompleted: boolean
+    partner: string
+    simpleSmartScheduleEnabled: boolean
+    awayRadiusInMeters: number
+    usePreSkillsApps: boolean
+    skills: string[]
+    christmasModeEnabled: boolean
+    contactDetails: ContactDetails
+    address: Address
+    geolocation: GeoLocation
     consentGrantSkippable: boolean
 }
 
