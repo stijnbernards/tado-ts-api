@@ -25,18 +25,22 @@ export default async function tadoRequest<T = any>(uri: string, options: Request
   }
 
   return new Promise<T>((resolve) => {
-    fetch(`${tadoEnvironment.baseUrl}${uri}`, requestOptions).then((response) => {
-      if (response.status === 401) {
-        refreshToken().then(() => {
-          resolve(tadoRequest(uri, options, attempts += 1))
-        })
+    try {
+      fetch(`${tadoEnvironment.baseUrl}${uri}`, requestOptions).then((response) => {
+        if (response.status === 401) {
+          refreshToken().then(() => {
+            resolve(tadoRequest(uri, options, attempts += 1))
+          })
 
-        return
-      }
+          return
+        }
 
-      response.json().then((result => {
-        resolve(result)
-      }))
-    })
+        response.json().then((result => {
+          resolve(result)
+        }))
+      })
+    } catch (error) {
+      console.warn(error)
+    }
   })
 }
